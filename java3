@@ -1,0 +1,54 @@
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class AIChatbot {
+    private HashMap<String, String> knowledgeBase;
+
+    public AIChatbot() {
+        knowledgeBase = new HashMap<>();
+
+        // Frequently Asked Questions and responses
+        knowledgeBase.put("hello", "Hello! How can I assist you today?");
+        knowledgeBase.put("hi", "Hi there! What can I do for you?");
+        knowledgeBase.put("how are you", "I'm an AI chatbot, always ready to help!");
+        knowledgeBase.put("your name", "I am AIChatbot, your virtual assistant.");
+        knowledgeBase.put("what can you do", "I can answer your questions based on my training.");
+        knowledgeBase.put("help", "Sure, ask me anything related to this chatbot.");
+        knowledgeBase.put("thank you", "You're welcome!");
+        knowledgeBase.put("bye", "Goodbye! Have a great day!");
+    }
+
+    // Basic NLP: keyword matching to get response
+    public String getResponse(String input) {
+        input = input.toLowerCase();
+
+        for (String key : knowledgeBase.keySet()) {
+            if (input.contains(key)) {
+                return knowledgeBase.get(key);
+            }
+        }
+        return "Sorry, I didn't understand that. Could you please rephrase?";
+    }
+
+    // Interactive console chat session
+    public void chat() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("AIChatbot: Hello! Ask me anything (type 'bye' to exit).");
+        while (true) {
+            System.out.print("You: ");
+            String userInput = scanner.nextLine().trim();
+            if (userInput.equalsIgnoreCase("bye")) {
+                System.out.println("AIChatbot: " + knowledgeBase.get("bye"));
+                break;
+            }
+            String response = getResponse(userInput);
+            System.out.println("AIChatbot: " + response);
+        }
+        scanner.close();
+    }
+
+    public static void main(String[] args) {
+        AIChatbot bot = new AIChatbot();
+        bot.chat();
+    }
+}
